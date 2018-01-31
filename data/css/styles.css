@@ -1,1 +1,10 @@
 body { padding-bottom: 70px; }
+
+#btn-group-power {
+position: relative;
+left: 40%
+}
+
+#form-group-brightness {
+margin-top: 40pt;
+}

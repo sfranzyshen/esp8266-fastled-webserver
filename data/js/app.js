@@ -1,27 +1,28 @@
 // used when hosting the site on the ESP8266
-var address = location.hostname;
-var urlBase = "";
+// var address = location.hostname;
+// var urlBase = "";
 
 // used when hosting the site somewhere other than the ESP8266 (handy for testing without waiting forever to upload to SPIFFS)
 // var address = "esp8266-1920f7.local";
-// var urlBase = "http://" + address + "/";
+var address = "127.0.0.1:8000"
+var urlBase = "http://" + address + "/";
 
 var postColorTimer = {};
 var postValueTimer = {};
 
 var ignoreColorChange = false;
 
-var ws = new ReconnectingWebSocket('ws://' + address + ':81/', ['arduino']);
-ws.debug = true;
+// var ws = new ReconnectingWebSocket('ws://' + address + ':81/', ['arduino']);
+// ws.debug = true;
 
-ws.onmessage = function(evt) {
-  if(evt.data != null)
-  {
-    var data = JSON.parse(evt.data);
-    if(data == null) return;
-    updateFieldValue(data.name, data.value);
-  }
-}
+// ws.onmessage = function(evt) {
+//   if(evt.data != null)
+//   {
+//     var data = JSON.parse(evt.data);
+//     if(data == null) return;
+//     updateFieldValue(data.name, data.value);
+//   }
+// }
 
 $(document).ready(function() {
   $("#status").html("Connecting, please wait...");
@@ -51,7 +52,7 @@ $(document).ready(function() {
         format: "rgb",
         inline: true
       });
-
+      setPowerButton();
       $("#status").html("Ready");
     })
     .fail(function(errorThrown) {
@@ -114,9 +115,12 @@ function addBooleanField(field) {
   template.attr("id", "form-group-" + field.name);
   template.attr("data-field-type", field.type);
 
-  var label = template.find(".control-label");
-  label.attr("for", "btn-group-" + field.name);
-  label.text(field.label);
+  if(field.name != 'power'){
+    var label = template.find(".control-label");
+    label.attr("for", "btn-group-" + field.name);
+    label.text(field.label);
+  }
+
 
   var btngroup = template.find(".btn-group");
   btngroup.attr("id", "btn-group-" + field.name);
@@ -459,4 +463,28 @@ function rgbToComponents(rgb) {
   components.b = parseInt(rgb[3]);
 
   return components;
+}
+
+
+function setPowerButton(){
+  if($("#btnOnpower").hasClass("btn-primary")){
+      showSettings();
+  }else{
+      hideSettings();
+  }
+    $("#btn-group-power").on("click", function(){
+      if($("#btnOnpower").hasClass("btn-primary")){
+          showSettings();
+      }else{
+          hideSettings();
+      }
+    });
+}
+
+function showSettings(){
+  return;
+}
+
+function hideSettings(){
+  return;
 }
