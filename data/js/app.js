@@ -12,17 +12,17 @@ var postValueTimer = {};
 var advancedSettings = false;
 var ignoreColorChange = false;
 
-// var ws = new ReconnectingWebSocket('ws://' + address + ':81/', ['arduino']);
-// ws.debug = true;
+var ws = new ReconnectingWebSocket('ws://' + address + ':81/', ['arduino']);
+ws.debug = true;
 
-// ws.onmessage = function(evt) {
-//   if(evt.data != null)
-//   {
-//     var data = JSON.parse(evt.data);
-//     if(data == null) return;
-//     updateFieldValue(data.name, data.value);
-//   }
-// }
+ws.onmessage = function(evt) {
+  if(evt.data != null)
+  {
+    var data = JSON.parse(evt.data);
+    if(data == null) return;
+    updateFieldValue(data.name, data.value);
+  }
+}
 
 $(document).ready(function() {
   $("#status").html("Connecting, please wait...");
@@ -472,7 +472,7 @@ function setPowerButton(){
   if($("#btnOnpower").hasClass("btn-primary")){
       showSettings();
   }else{
-      hideSettings();
+      $("form").children('div:not(#form-group-power)').hide();
   }
     $("#btn-group-power").on("click", function(){
       if($("#btnOnpower").hasClass("btn-primary")){
