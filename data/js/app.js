@@ -8,7 +8,7 @@ var urlBase = "";
 
 var postColorTimer = {};
 var postValueTimer = {};
-
+var advancedSettings = false;
 var ignoreColorChange = false;
 
 var ws = new ReconnectingWebSocket('ws://' + address + ':81/', ['arduino']);
@@ -52,6 +52,8 @@ $(document).ready(function() {
         inline: true
       });
 
+      createAdvancedSettings();
+      setPowerButton();
       $("#status").html("Ready");
     })
     .fail(function(errorThrown) {
@@ -114,9 +116,12 @@ function addBooleanField(field) {
   template.attr("id", "form-group-" + field.name);
   template.attr("data-field-type", field.type);
 
-  var label = template.find(".control-label");
-  label.attr("for", "btn-group-" + field.name);
-  label.text(field.label);
+  if(field.name != 'power'){
+    var label = template.find(".control-label");
+    label.attr("for", "btn-group-" + field.name);
+    label.text(field.label);
+  }
+
 
   var btngroup = template.find(".btn-group");
   btngroup.attr("id", "btn-group-" + field.name);
@@ -459,4 +464,47 @@ function rgbToComponents(rgb) {
   components.b = parseInt(rgb[3]);
 
   return components;
+}
+
+
+function setPowerButton(){
+  if($("#btnOnpower").hasClass("btn-primary")){
+      showSettings();
+  }else{
+      $("form").children('div:not(#form-group-power)').hide();
+  }
+    $("#btn-group-power").on("click", function(){
+      if($("#btnOnpower").hasClass("btn-primary")){
+          showSettings();
+      }else{
+          hideSettings();
+      }
+    });
+}
+
+function showSettings(){
+    $("form").children('div:not(#form-group-power)').slideDown();
+    $("#advanced-settings").children("div").hide();
+}
+
+function hideSettings(){
+  $("form").children('div:not(#form-group-power)').slideUp();
+}
+
+function createAdvancedSettings(){
+  $("form").append('<div id="advanced-settings"><label id="advanced-settings-label" class="col-sm-2 control-label" for="advanced-settings">Advanced Settings</label></div>');
+  $("#form-group-cooling").detach().appendTo("#advanced-settings");
+  $("#form-group-sparking").detach().appendTo("#advanced-settings");
+  $("#form-group-twinkleSpeed").detach().appendTo("#advanced-settings");
+  $("#form-group-twinkleDensity").detach().appendTo("#advanced-settings");
+  $("#advanced-settings").children("div").hide();
+  $("#advanced-settings").on("click", function(){
+    if(advancedSettings == false){
+      $("#advanced-settings").children("div").slideDown();
+      advancedSettings = true;
+    }else{
+      $("#advanced-settings").children("div").slideUp();
+      advancedSettings = false;
+    }
+  });
 }
