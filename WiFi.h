@@ -13,7 +13,7 @@ const char WiFiAPPSK[] = "";
 char* ssid = "";
 char* password = "";
 
-#define HOSTNAME "ESP8266-" ///< Hostname. The initializeWiFi function adds the Chip ID at the end.
+#define HOSTNAME "ESP8266" ///< Hostname. The initializeWiFi function adds the Chip ID at the end.
 
 #define DEBUG_WIFI 1
 
@@ -98,7 +98,7 @@ void initializeWiFi() {
 
   // Set Hostname.
   String hostname = String(HOSTNAME);
-  hostname += String(ESP.getChipId(), HEX);
+  // hostname += String(ESP.getChipId(), HEX);
   WiFi.hostname(hostname);
 
   // Print hostname.
