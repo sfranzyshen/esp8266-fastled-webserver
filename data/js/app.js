@@ -4,8 +4,7 @@ var urlBase = "";
 
 // used when hosting the site somewhere other than the ESP8266 (handy for testing without waiting forever to upload to SPIFFS)
 // var address = "esp8266-1920f7.local";
-var address = ""
-var urlBase = "";
+// var urlBase = "http://" + address + "/";
 
 var postColorTimer = {};
 var postValueTimer = {};
