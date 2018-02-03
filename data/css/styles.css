@@ -8,3 +8,13 @@ left: 40%
 #form-group-brightness {
 margin-top: 40pt;
 }
+
+#colorPaletteTemplate {
+width: 50%;
+float: left;
+}
+
+.color-wheel{
+margin-top: 20px;
+}
+

@@ -9,7 +9,7 @@ var urlBase = "http://" + address + "/";
 
 var postColorTimer = {};
 var postValueTimer = {};
-
+var advancedSettings = false;
 var ignoreColorChange = false;
 
 // var ws = new ReconnectingWebSocket('ws://' + address + ':81/', ['arduino']);
@@ -52,6 +52,8 @@ $(document).ready(function() {
         format: "rgb",
         inline: true
       });
+
+      createAdvancedSettings();
       setPowerButton();
       $("#status").html("Ready");
     })
@@ -482,9 +484,28 @@ function setPowerButton(){
 }
 
 function showSettings(){
-  return;
+    $("form").children('div:not(#form-group-power)').slideDown();
+    $("#advanced-settings").children("div").hide();
 }
 
 function hideSettings(){
-  return;
+  $("form").children('div:not(#form-group-power)').slideUp();
+}
+
+function createAdvancedSettings(){
+  $("form").append('<div id="advanced-settings"><label id="advanced-settings-label" class="col-sm-2 control-label" for="advanced-settings">Advanced Settings</label></div>');
+  $("#form-group-cooling").detach().appendTo("#advanced-settings");
+  $("#form-group-sparking").detach().appendTo("#advanced-settings");
+  $("#form-group-twinkleSpeed").detach().appendTo("#advanced-settings");
+  $("#form-group-twinkleDensity").detach().appendTo("#advanced-settings");
+  $("#advanced-settings").children("div").hide();
+  $("#advanced-settings").on("click", function(){
+    if(advancedSettings == false){
+      $("#advanced-settings").children("div").slideDown();
+      advancedSettings = true;
+    }else{
+      $("#advanced-settings").children("div").slideUp();
+      advancedSettings = false;
+    }
+  });
 }
