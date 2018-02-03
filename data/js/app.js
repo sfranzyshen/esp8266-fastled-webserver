@@ -1,11 +1,11 @@
 // used when hosting the site on the ESP8266
-// var address = location.hostname;
-// var urlBase = "";
+var address = location.hostname;
+var urlBase = "";
 
 // used when hosting the site somewhere other than the ESP8266 (handy for testing without waiting forever to upload to SPIFFS)
 // var address = "esp8266-1920f7.local";
-var address = "127.0.0.1:8000"
-var urlBase = "http://" + address + "/";
+var address = ""
+var urlBase = "";
 
 var postColorTimer = {};
 var postValueTimer = {};
